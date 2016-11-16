@@ -6,6 +6,19 @@
 </head>
 <body>
 <h1>{{ question.question_text }}</h1>
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<br action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+    <input type="radio" name="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
+
+<p>---------</p>
 <ul>
     {% for coice in question.choice_set_all %}
     <li>{{ choice.choice_text }}</li>
