@@ -6,31 +6,31 @@ from django.utils import timezone
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=160)
-    creation_date = models.DateTimeField('creation date')
-    description = models.CharField(max_length=1000)
-    start_date = models.DateTimeField('start date')
-    end_date = models.DateTimeField('end date')
+    name = models.CharField('Course Name', max_length=160)
+    creation_date = models.DateTimeField('Creation date', default=timezone.now(), editable=False)
+    description = models.TextField('Description', max_length=1000)
+    start_date = models.DateTimeField('Start date')
+    end_date = models.DateTimeField('End date')
 
     def __str__(self):
-        return self.attr_name
+        return self.name
 
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    def was_started_recently(self):
+        return self.start_date >= timezone.now() - datetime.timedelta(days=1)
 
 
 class Topic(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
-    name = models.CharField(max_length=160)
-    creation_date = models.DateTimeField('creation_date')
-    description = models.CharField(max_length=1000)
-    start_date = models.DateTimeField('start_date')
-    end_date = models.DateTimeField('end_date')
+    name = models.CharField('Topic Name', max_length=160)
+    creation_date = models.DateTimeField('Creation date', default=timezone.now(), editable=False)
+    description = models.TextField('Description', max_length=1000)
+    start_date = models.DateTimeField('Start date')
+    end_date = models.DateTimeField('End date')
 
     def __str__(self):
-        return self.attr_name
+        return self.name
 
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    def was_started_recently(self):
+        return self.start_date >= timezone.now() - datetime.timedelta(days=1)
 
